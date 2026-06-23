@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>P3 · Institutional Partnership Agreement Builder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <img src="assets/p3-logo-horizontal.png" alt="Pulse of Perseverance Project" />
+      <span class="brand-divider"></span>
+      <div class="brand-text">
+        <strong>Institutional Partnership Agreement</strong>
+        <span>Pre-fill &amp; generate · 2026 Edition</span>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <span id="saved-pill" class="saved-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg> Saved</span>
+      <button id="btn-reset" class="reset-btn" type="button">Reset</button>
+    </div>
+  </div>
+</header>
+
+<div id="config-warn" class="config-warn" style="display:none">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4m0 4h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+  <span></span>
+</div>
+
+<main class="layout">
+  <!-- left: section nav + progress -->
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+      <div class="progress-card">
+        <div class="progress-top">
+          <span class="progress-label">Completion</span>
+          <span id="progress-pct" class="progress-pct">0%</span>
+        </div>
+        <div class="progress-track"><div id="progress-bar" class="progress-fill"></div></div>
+        <div id="progress-count" class="progress-count">0 / 0 fields</div>
+      </div>
+      <nav id="nav-list" class="nav-list"></nav>
+      <p class="sidebar-foot">Your entries are saved in this browser only. Nothing is uploaded until you generate a document.</p>
+    </div>
+  </aside>
+
+  <!-- center: the form -->
+  <div class="form-col">
+    <div class="intro">
+      <h1>Build a partnership agreement</h1>
+      <p>Fill in the fields below once — the same details flow into the <strong>MSA</strong>, <strong>Order Form</strong>, <strong>Statement of Work</strong> and <strong>Data Sharing Agreement</strong>. Then download a pre-filled PDF or open it as a Google Doc to finish and send for signature.</p>
+    </div>
+    <div id="form" class="form"></div>
+    <div class="form-end">
+      <p>Review everything above, then generate your document from the bar below. Optional sections you didn’t turn on are simply left out.</p>
+    </div>
+  </div>
+</main>
+
+<!-- sticky action bar -->
+<div class="actionbar">
+  <div class="actionbar-inner">
+    <label class="hl-toggle" title="Bold + underline every value you inserted, so reviewers can see what was filled in.">
+      <input type="checkbox" id="toggle-highlight" checked />
+      <span class="hl-box"></span>
+      <span>Highlight inserted values</span>
+    </label>
+    <div class="actionbar-btns">
+      <button id="btn-preview" class="btn btn-ghost" type="button">Preview</button>
+      <button id="btn-gdoc" class="btn btn-secondary" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h8M8 9h2"/></svg>
+        Open in Google Docs
+      </button>
+      <button id="btn-pdf" class="btn btn-primary" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg>
+        Download PDF
+      </button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<!-- libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.10/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.10/vfs_fonts.js"></script>
+<!-- app -->
+<script src="assets/config.js"></script>
+<script src="assets/logo-data.js"></script>
+<script src="assets/schema.js"></script>
+<script src="assets/document-model.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
