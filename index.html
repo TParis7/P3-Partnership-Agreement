@@ -78,7 +78,9 @@ svg{width:1em;height:1em;display:block}
 .nav-item:hover{background:var(--surface-2);color:var(--on-surface)}
 .nav-item.active{background:var(--sel);color:var(--on-surface)}
 .nav-dot{width:8px;height:8px;border-radius:50%;background:var(--outline);flex:none}
-.nav-opt{margin-left:auto;font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.04em;color:var(--on-surface-variant);background:var(--surface-3);border-radius:5px;padding:1px 6px}
+.nav-opt{margin-left:auto;display:inline-flex;flex:none;color:var(--hint)}
+.nav-opt svg{width:13px;height:13px}
+.nav-item:hover .nav-opt,.nav-item.active .nav-opt{color:var(--on-surface-variant)}
 .sidebar-foot{font-size:13px;color:var(--hint);line-height:1.5;padding:0 4px;margin:0}
 
 /* ---------- form column ---------- */
@@ -1555,7 +1557,10 @@ window.P3_LOGO_DATAURL = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAD2kAAATE
       var dot = el("span", "nav-dot"); dot.style.background = toneFor(sec.id).fg;
       a.appendChild(dot);
       a.appendChild(el("span", "", { text: sec.title }));
-      if (sec.optional) a.appendChild(el("span", "nav-opt", { text: "optional" }));
+      if (sec.optional) {
+        a.title = "Optional section";
+        a.appendChild(el("span", "nav-opt", { html: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 6v12M6 12h12"/></svg>' }));
+      }
       a.addEventListener("click", function (e) {
         e.preventDefault();
         document.getElementById("sec-" + sec.id).scrollIntoView({ behavior: "smooth", block: "start" });
