@@ -40,7 +40,7 @@ svg{width:1em;height:1em;display:block}
 ::selection{background:var(--surface-3)}
 
 /* ---------- top app bar ---------- */
-.topbar{position:sticky;top:0;z-index:40;background:var(--surface);border-bottom:1px solid var(--outline-variant);transition:box-shadow .2s,border-color .2s}
+.topbar{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.72);backdrop-filter:saturate(1.5) blur(14px);-webkit-backdrop-filter:saturate(1.5) blur(14px);border-bottom:1px solid var(--outline-variant);transition:box-shadow .2s,border-color .2s}
 .topbar.scrolled{box-shadow:var(--e1);border-bottom-color:transparent}
 .topbar-inner{max-width:1320px;margin:0 auto;padding:10px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
 .brand{display:flex;align-items:center;gap:14px;min-width:0}
@@ -85,14 +85,24 @@ svg{width:1em;height:1em;display:block}
 .doc-switch{display:flex;align-items:center;gap:14px;margin-bottom:18px;padding:14px 18px;background:var(--surface);border-radius:var(--r-card);box-shadow:var(--e1)}
 .doc-switch-label{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.08em;color:var(--on-surface-variant);flex:none}
 .doc-select-wrap{position:relative;flex:1;min-width:0}
-.doc-select{appearance:none;-webkit-appearance:none;width:100%;font:inherit;font-size:16px;font-weight:500;color:var(--on-surface);
-  background:var(--field);border:1px solid transparent;border-radius:var(--r-field);padding:11px 44px 11px 14px;cursor:pointer;transition:.15s;outline:none}
+.doc-select{appearance:none;-webkit-appearance:none;width:100%;font-family:var(--font);font-size:16px;font-weight:500;color:var(--on-surface);
+  background:var(--field);border:1px solid transparent;border-radius:var(--r-field);padding:11px 14px;cursor:pointer;transition:.15s;outline:none;display:flex;align-items:center;gap:10px;text-align:left}
 .doc-select:hover{background:var(--field-hover)}
-.doc-select:focus{background:#fff;border-color:var(--primary);box-shadow:inset 0 0 0 1px var(--primary)}
-.doc-caret{position:absolute;right:14px;top:50%;transform:translateY(-50%);width:20px;height:20px;color:var(--on-surface-variant);pointer-events:none}
+.doc-select[aria-expanded="true"]{background:#fff;border-color:var(--primary);box-shadow:inset 0 0 0 1px var(--primary)}
+#doc-type-label{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.doc-caret{width:20px;height:20px;color:var(--on-surface-variant);flex:none;transition:transform .2s}
+.doc-select[aria-expanded="true"] .doc-caret{transform:rotate(180deg)}
+.doc-menu{position:absolute;top:calc(100% + 6px);left:0;right:0;z-index:30;margin:0;padding:6px;list-style:none;background:#fff;border-radius:10px;box-shadow:var(--e3);display:none}
+.doc-menu.open{display:block}
+.doc-opt{font-family:var(--font);font-size:14px;color:var(--on-surface);padding:11px 12px;border-radius:8px;cursor:pointer;display:flex;align-items:center;gap:10px;line-height:1.3}
+.doc-opt:hover{background:var(--surface-2)}
+.doc-opt.sel{font-weight:500}
+.doc-opt.sel::after{content:"";margin-left:auto;width:16px;height:16px;flex:none;background:var(--strong);
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 8.5l3 3 7-7' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat;
+  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 8.5l3 3 7-7' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat}
 .intro{margin-bottom:20px}
 .intro h1{font-weight:400;font-size:22px;color:var(--on-surface);margin:0 0 6px}
-.intro p{font-size:14px;color:var(--on-surface-variant);max-width:64ch;margin:0}
+.intro p{font-size:14px;color:var(--on-surface-variant);margin:0}
 .intro strong{color:var(--strong);font-weight:500}
 .form{display:flex;flex-direction:column;gap:16px}
 
@@ -101,7 +111,7 @@ svg{width:1em;height:1em;display:block}
 .card:hover,.card:focus-within{box-shadow:var(--e2)}
 .card-head{display:flex;align-items:flex-start;gap:16px;padding:18px 24px;background:var(--surface-head)}
 .card:not(.collapsed) .card-head{border-bottom:1px solid var(--outline-variant)}
-.card-icon{width:40px;height:40px;border-radius:50%;flex:none;display:grid;place-items:center;background:var(--surface-2);color:var(--on-surface-variant)}
+.card-icon{width:40px;height:40px;border-radius:50%;flex:none;display:grid;place-items:center;background:#fff;color:var(--on-surface-variant);box-shadow:0 1px 2px rgba(60,64,67,.16)}
 .card-icon svg{width:20px;height:20px}
 .card-head-text{flex:1;min-width:0}
 .card-head-text h2{font-weight:500;font-size:16px;color:var(--on-surface);margin:2px 0 0}
@@ -167,7 +177,7 @@ textarea.input{resize:vertical;min-height:80px;line-height:1.55}
 .form-end{margin:20px 4px 4px;font-size:13px;color:var(--on-surface-variant);text-align:center;line-height:1.5}
 
 /* ---------- bottom app bar ---------- */
-.actionbar{position:fixed;left:0;right:0;bottom:0;z-index:45;background:var(--surface);border-top:1px solid var(--outline-variant);box-shadow:0 -1px 4px rgba(60,64,67,.08)}
+.actionbar{position:fixed;left:0;right:0;bottom:0;z-index:45;background:rgba(255,255,255,.7);backdrop-filter:saturate(1.6) blur(16px);-webkit-backdrop-filter:saturate(1.6) blur(16px);border-top:1px solid var(--outline-variant);box-shadow:0 -2px 10px rgba(60,64,67,.10)}
 .actionbar-inner{max-width:1320px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
 .hl-toggle{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:500;color:var(--on-surface-variant);cursor:pointer;user-select:none}
 .hl-toggle input{position:absolute;opacity:0;width:0;height:0}
@@ -267,10 +277,13 @@ textarea.input{resize:vertical;min-height:80px;line-height:1.55}
   <!-- center: the form -->
   <div class="form-col">
     <div class="doc-switch">
-      <label class="doc-switch-label" for="doc-type">Document</label>
+      <span class="doc-switch-label">Document</span>
       <div class="doc-select-wrap">
-        <select id="doc-type" class="doc-select" aria-label="Document type"></select>
-        <svg class="doc-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        <button type="button" id="doc-type" class="doc-select" aria-haspopup="listbox" aria-expanded="false">
+          <span id="doc-type-label"></span>
+          <svg class="doc-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <ul class="doc-menu" id="doc-menu" role="listbox"></ul>
       </div>
     </div>
     <div class="intro">
@@ -421,7 +434,7 @@ window.P3_LOGO_DATAURL = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAD2kAAATE
       desc: "Entered once here — flows to all four agreements automatically.",
       fields: [
         { key: "institutionLegalName", label: "Institution Legal Name", type: "text", width: "full",
-          required: true, placeholder: "e.g. Howard University" },
+          required: true, placeholder: "Full legal name of the institution" },
         { key: "deptDivision", label: "Department / Division", type: "text", width: "half" },
         { key: "institutionAddress", label: "Institution Address", type: "text", width: "full",
           placeholder: "Street address" },
@@ -577,15 +590,15 @@ window.P3_LOGO_DATAURL = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAD2kAAATE
       desc: "The organization P3 is partnering with.",
       fields: [
         { key: "institutionLegalName", label: "Partner Organization Name", type: "text", width: "full",
-          required: true, placeholder: "e.g. Chicago State University" },
+          required: true, placeholder: "Full legal name of the partner organization" },
         { key: "partnerAbbr", label: "Short Name / Abbreviation", type: "text", width: "half",
-          placeholder: "e.g. CSU", help: "Used throughout the MOU body." },
+          placeholder: "Short name or acronym", help: "Used throughout the MOU body." },
         { key: "partnerType", label: "Organization Type", type: "text", width: "half",
           placeholder: "e.g. a public university" },
-        { key: "partnerEIN", label: "Partner EIN", type: "text", width: "half", placeholder: "e.g. 36-2580815" },
-        { key: "partnerState", label: "State of Organization", type: "text", width: "half", placeholder: "e.g. Illinois" },
+        { key: "partnerEIN", label: "Partner EIN", type: "text", width: "half", placeholder: "00-0000000" },
+        { key: "partnerState", label: "State of Organization", type: "text", width: "half", placeholder: "State of incorporation" },
         { key: "partnerAddress", label: "Headquarters Address", type: "text", width: "full",
-          placeholder: "e.g. 9501 S. King Drive, Chicago, IL 60668" }
+          placeholder: "Street, City, State ZIP" }
       ]
     },
     {
@@ -617,9 +630,9 @@ window.P3_LOGO_DATAURL = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAD2kAAATE
         { key: "p3SignTitle", label: "Title", type: "text", width: "half" },
         { key: "p3SignDate", label: "Date", type: "date", width: "half" },
         { key: "partnerSignHead", type: "subhead", label: "Partner / Counterparty" },
-        { key: "clientSignName", label: "Name", type: "text", width: "half", placeholder: "e.g. Dr. Sonja Feist-Price" },
+        { key: "clientSignName", label: "Name", type: "text", width: "half", placeholder: "Authorized signer's name" },
         { key: "clientSignTitle", label: "Title", type: "text", width: "half",
-          placeholder: "e.g. Executive Vice President, Provost" },
+          placeholder: "Signer's title / role" },
         { key: "clientSignDate", label: "Date", type: "date", width: "half" }
       ]
     }
@@ -1493,8 +1506,9 @@ window.P3_LOGO_DATAURL = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAD2kAAATE
       var card = el("section", "card"); card.id = "sec-" + sec.id;
       var head = el("div", "card-head");
       var tone = toneFor(sec.id);
+      head.style.background = tone.bg;          // soft section-color header band
       var iconEl = el("div", "card-icon", { html: icon(sec.icon) });
-      iconEl.style.background = tone.bg; iconEl.style.color = tone.fg;
+      iconEl.style.color = tone.fg;             // colored icon on a white chip
       head.appendChild(iconEl);
       var ht = el("div", "card-head-text");
       ht.appendChild(el("h2", "", { text: sec.title }));
@@ -1549,15 +1563,24 @@ window.P3_LOGO_DATAURL = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAD2kAAATE
 
   // ---- document-type switch + intro ----------------------------------------
   function buildDocSwitch() {
-    var sel = document.getElementById("doc-type");
-    sel.innerHTML = "";
+    var btn = document.getElementById("doc-type"), menu = document.getElementById("doc-menu");
+    document.getElementById("doc-type-label").textContent = docDef(docType).label;
+    menu.innerHTML = "";
     DOC_TYPES.forEach(function (dt) {
-      var o = el("option", "", { value: dt.id, text: dt.label });
-      if (dt.id === docType) o.selected = true;
-      sel.appendChild(o);
+      var li = el("li", "doc-opt" + (dt.id === docType ? " sel" : ""), { text: dt.label });
+      li.setAttribute("role", "option");
+      li.addEventListener("click", function (e) { e.stopPropagation(); closeDocMenu(); setDocType(dt.id); });
+      menu.appendChild(li);
     });
-    sel.value = docType;
-    sel.onchange = function () { setDocType(sel.value); };
+    btn.onclick = function (e) { e.stopPropagation(); toggleDocMenu(); };
+  }
+  function toggleDocMenu() {
+    var m = document.getElementById("doc-menu"), b = document.getElementById("doc-type");
+    b.setAttribute("aria-expanded", m.classList.toggle("open") ? "true" : "false");
+  }
+  function closeDocMenu() {
+    var m = document.getElementById("doc-menu"), b = document.getElementById("doc-type");
+    if (m && m.classList.contains("open")) { m.classList.remove("open"); b.setAttribute("aria-expanded", "false"); }
   }
   function setIntro() {
     var dt = docDef(docType);
@@ -1567,7 +1590,7 @@ window.P3_LOGO_DATAURL = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAD2kAAATE
   function setDocType(id) {
     if (id === docType) return;
     docType = id;
-    setIntro(); renderSections(); scrollSpy(); updateProgress(); save();
+    buildDocSwitch(); setIntro(); renderSections(); scrollSpy(); updateProgress(); save();
     document.querySelector(".form-col").scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
@@ -1812,6 +1835,10 @@ window.P3_LOGO_DATAURL = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAD2kAAATE
       state = defaults(); sectionsOn = { insurance: false, sow: false, special: false };
       buildDocSwitch(); setIntro(); renderSections(); scrollSpy(); updateProgress(); toast("Form reset.");
     });
+
+    // close the document menu on outside click / Escape
+    document.addEventListener("click", closeDocMenu);
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeDocMenu(); });
 
     // Material app bar: elevate on scroll
     var tb = document.querySelector(".topbar");
