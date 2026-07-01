@@ -772,7 +772,6 @@ window.P3_LOGO_DATAURL = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAD2kAAATE
     ]});
     if (instName) push({ t: "coverParty", label: "Prepared for", value: instName });
     if (fmtDate("effectiveDate")) push({ t: "coverParty", label: "Effective date", value: fmtDate("effectiveDate") });
-    push({ t: "note", text: "Guide / “how to complete” pages from the source suite are omitted; this document contains the four executable agreements, pre-filled." });
 
     // =======================================================================
     // I. MASTER SERVICES AGREEMENT
@@ -1682,18 +1681,16 @@ window.P3_LOGO_DATAURL = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAD2kAAATE
     function add(node) { if (pendingBreak) { node.pageBreak = "before"; pendingBreak = false; } content.push(node); }
     model.forEach(function (b) {
       switch (b.t) {
-        case "title": add({ text: b.text, style: "coverTitle", margin: [0, 120, 0, 8] }); break;
+        case "title": add({ text: b.text.toUpperCase(), style: "coverTitle", margin: [0, 120, 0, 8] }); break;
         case "coverMeta":
-          b.lines.forEach(function (l, i) { add({ text: l, style: i === 0 ? "coverSub" : "coverMeta", margin: [0, i === 0 ? 6 : 3, 0, 0] }); }); break;
+          b.lines.forEach(function (l, i) { add({ text: l.toUpperCase(), bold: true, alignment: "center", fontSize: i === 0 ? 11 : 9.5, color: i === 1 ? "#1155CC" : "#000000", margin: [0, i === 0 ? 8 : 3, 0, 0] }); }); break;
         case "coverParty":
           add({ text: [{ text: b.label + ":  ", color: "#888" }, { text: b.value, bold: true }], alignment: "center", margin: [0, 14, 0, 0], fontSize: 11 }); break;
         case "note": add({ text: b.text, style: "note", margin: [0, 20, 0, 0] }); break;
         case "pageBreak": pendingBreak = true; break;
-        case "h1":
-          add({ text: b.text, style: "h1", margin: [0, 0, 0, 2] });
-          add({ canvas: [{ type: "line", x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1.4, lineColor: CONFIG.BRAND.crimson }], margin: [0, 0, 0, 10] }); break;
-        case "h2": add({ text: b.text, style: "h2" }); break;
-        case "h3": add({ text: b.text, style: "h3" }); break;
+        case "h1": add({ text: b.text.toUpperCase(), style: "h1", margin: [0, 8, 0, 12] }); break;
+        case "h2": add({ text: b.text.toUpperCase(), style: "h2" }); break;
+        case "h3": add({ text: b.text.toUpperCase(), style: "h3" }); break;
         case "p": add({ text: b.runs.map(function (r) { return runStyle(r, highlight); }), style: "p" }); break;
         case "bullets": add({ ul: b.items, style: "p", margin: [4, 2, 0, 8] }); break;
         case "numbered": add({ ol: b.items, style: "p", margin: [4, 2, 0, 8] }); break;
@@ -1708,7 +1705,7 @@ window.P3_LOGO_DATAURL = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAD2kAAATE
           add({ columns: [box, { width: "*", text: b.text, bold: !!b.checked, fontSize: 9.5, margin: [0, 0.5, 0, 0] }], columnGap: 3, margin: [2, 1.5, 0, 3] }); break;
         case "sig":
           var col = function (head, side) {
-            var stack = [{ text: head, bold: true, fontSize: 9.5, margin: [0, 0, 0, 8], color: CONFIG.BRAND.maroon }];
+            var stack = [{ text: head, bold: true, fontSize: 9.5, margin: [0, 0, 0, 8], color: "#000000" }];
             b.rows.forEach(function (r) {
               var val = side === "L" ? r.left : r.right;
               stack.push({ text: [{ text: r.label + ":  ", bold: true, fontSize: 9 },
@@ -1735,13 +1732,13 @@ window.P3_LOGO_DATAURL = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAD2kAAATE
       content: content,
       defaultStyle: { font: "Roboto", fontSize: 9.5, lineHeight: 1.28, color: "#1a1a1a" },
       styles: {
-        coverTitle: { fontSize: 30, bold: true, alignment: "center", color: CONFIG.BRAND.maroon },
+        coverTitle: { fontSize: 26, bold: true, alignment: "center", color: "#000000" },
         coverSub: { fontSize: 11, alignment: "center", color: "#555" },
         coverMeta: { fontSize: 9.5, alignment: "center", color: "#999" },
         note: { fontSize: 8.5, italics: true, alignment: "center", color: "#aaa" },
-        h1: { fontSize: 19, bold: true, color: CONFIG.BRAND.maroon },
-        h2: { fontSize: 11.5, bold: true, color: "#111", margin: [0, 11, 0, 4] },
-        h3: { fontSize: 10.5, bold: true, color: CONFIG.BRAND.crimsonDark, characterSpacing: 0.4, margin: [0, 12, 0, 5] },
+        h1: { fontSize: 15, bold: true, color: "#000000", alignment: "center" },
+        h2: { fontSize: 11.5, bold: true, color: "#000000", margin: [0, 11, 0, 4] },
+        h3: { fontSize: 10.5, bold: true, color: "#000000", characterSpacing: 0.4, margin: [0, 12, 0, 5] },
         p: { fontSize: 9.5, margin: [0, 0, 0, 7], alignment: "justify" }
       }
     };
